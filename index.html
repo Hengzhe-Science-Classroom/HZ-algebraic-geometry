@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algebraic Geometry — Interactive</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <button id="sidebar-toggle" aria-label="Toggle sidebar">&#9776;</button>
+        <aside id="sidebar">
+            <div id="sidebar-header">
+                <h1>Algebraic Geometry</h1>
+                <p class="author">Hartshorne / Vakil / Shafarevich</p>
+                <div id="progress-container">
+                    <div id="progress-bar"><div id="progress-fill"></div></div>
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+            <div id="search-container">
+                <input type="text" id="search-input" placeholder="Search topics...">
+            </div>
+            <nav id="chapter-nav"></nav>
+            <div id="sidebar-footer"><p class="copyright-notice" style="font-size:0.7rem;color:#888;margin-top:12px;text-align:center;">&copy; 2026 Hengzhe Zhao &middot; AGPL-3.0 &amp; Commercial</p>
+                <button id="reset-progress">Reset Progress</button>
+            </div>
+        </aside>
+        <main id="main-content">
+            <div id="welcome-screen">
+                <div class="welcome-hero">
+                    <h1>Algebraic Geometry</h1>
+                    <h2>代数几何 · Interactive</h2>
+                    <p class="welcome-description">
+                        From algebraic curves to schemes, from the Nullstellensatz to sheaf cohomology.
+                        See the geometry hidden in polynomial equations through interactive visualizations
+                        of varieties, morphisms, and the abstract machinery of modern algebraic geometry.
+                    </p>
+                </div>
+                <div class="roadmap">
+                    <h3>What You'll Explore</h3>
+                    <div class="roadmap-parts">
+                        <div class="roadmap-part">
+                            <h4>Part A: Affine Algebraic Geometry</h4>
+                            <ul>
+                                <li>Ch 0: Algebraic Sets &amp; the Zariski Topology</li>
+                                <li>Ch 1: The Coordinate Ring &amp; Nullstellensatz</li>
+                                <li>Ch 2: Morphisms of Affine Varieties</li>
+                                <li>Ch 3: Dimension</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part B: Projective Geometry</h4>
+                            <ul>
+                                <li>Ch 4: Projective Space &amp; Projective Varieties</li>
+                                <li>Ch 5: Projective Curves</li>
+                                <li>Ch 6: B&eacute;zout's Theorem &amp; Intersections</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part C: Local Theory</h4>
+                            <ul>
+                                <li>Ch 7: Local Rings &amp; Tangent Spaces</li>
+                                <li>Ch 8: Singularities &amp; Blowups</li>
+                                <li>Ch 9: Smooth Curves &amp; the Genus</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part D: Sheaves &amp; Schemes</h4>
+                            <ul>
+                                <li>Ch 10: Sheaves</li>
+                                <li>Ch 11: Schemes: Spec &amp; Gluing</li>
+                                <li>Ch 12: Properties of Schemes</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part E: Cohomology &amp; Divisors</h4>
+                            <ul>
+                                <li>Ch 13: Divisors &amp; Line Bundles</li>
+                                <li>Ch 14: Differentials &amp; the Canonical Bundle</li>
+                                <li>Ch 15: Sheaf Cohomology</li>
+                                <li>Ch 16: Riemann-Roch Theorem</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-part">
+                            <h4>Part F: Selected Topics</h4>
+                            <ul>
+                                <li>Ch 17: Elliptic Curves</li>
+                                <li>Ch 18: Surfaces &amp; Higher Dimensions</li>
+                                <li>Ch 19: The Weil Conjectures &amp; Beyond</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <p class="welcome-start">Select a chapter from the sidebar to begin your journey into algebraic geometry!</p>
+            </div>
+            <div id="chapter-content" style="display:none;">
+                <div id="chapter-header">
+                    <div id="chapter-number-badge"></div>
+                    <h1 id="chapter-title"></h1>
+                    <p id="chapter-subtitle"></p>
+                </div>
+                <div id="section-tabs"></div>
+                <article id="section-content"></article>
+                <div id="exercises-panel" style="display:none;">
+                    <h3>Exercises</h3>
+                    <div id="exercises-list"></div>
+                </div>
+                <div id="chapter-nav-buttons">
+                    <button id="prev-btn" disabled>&larr; Previous</button>
+                    <span id="section-indicator"></span>
+                    <button id="next-btn">Next &rarr;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <script src="viz-engine.js"></script>
+
+    <script>
+    window.CHAPTER_MANIFEST = [
+        {number:0,  id:'ch00', title:'Algebraic Sets & the Zariski Topology',      file:'ch00-algebraic-sets'},
+        {number:1,  id:'ch01', title:'The Coordinate Ring & Nullstellensatz',      file:'ch01-coordinate-ring'},
+        {number:2,  id:'ch02', title:'Morphisms of Affine Varieties',              file:'ch02-morphisms'},
+        {number:3,  id:'ch03', title:'Dimension',                                  file:'ch03-dimension'},
+        {number:4,  id:'ch04', title:'Projective Space & Projective Varieties',    file:'ch04-projective-space'},
+        {number:5,  id:'ch05', title:'Projective Curves',                          file:'ch05-projective-curves'},
+        {number:6,  id:'ch06', title:'B\u00e9zout\'s Theorem & Intersections',     file:'ch06-bezout'},
+        {number:7,  id:'ch07', title:'Local Rings & Tangent Spaces',               file:'ch07-local-rings'},
+        {number:8,  id:'ch08', title:'Singularities & Blowups',                    file:'ch08-singularities'},
+        {number:9,  id:'ch09', title:'Smooth Curves & the Genus',                  file:'ch09-genus'},
+        {number:10, id:'ch10', title:'Sheaves',                                    file:'ch10-sheaves'},
+        {number:11, id:'ch11', title:'Schemes: Spec & Gluing',                     file:'ch11-schemes'},
+        {number:12, id:'ch12', title:'Properties of Schemes',                      file:'ch12-scheme-properties'},
+        {number:13, id:'ch13', title:'Divisors & Line Bundles',                    file:'ch13-divisors'},
+        {number:14, id:'ch14', title:'Differentials & the Canonical Bundle',       file:'ch14-differentials'},
+        {number:15, id:'ch15', title:'Sheaf Cohomology',                           file:'ch15-sheaf-cohomology'},
+        {number:16, id:'ch16', title:'The Riemann-Roch Theorem',                   file:'ch16-riemann-roch'},
+        {number:17, id:'ch17', title:'Elliptic Curves',                            file:'ch17-elliptic-curves'},
+        {number:18, id:'ch18', title:'Surfaces & Higher Dimensions',               file:'ch18-surfaces'},
+        {number:19, id:'ch19', title:'The Weil Conjectures & Beyond',              file:'ch19-weil-conjectures'},
+    ];
+    </script>
+
+    <script src="app.js"></script>
+</body>
+</html>
